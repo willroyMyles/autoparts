@@ -40,6 +40,7 @@ dependencies:
   entry: ^0.0.6
   google_sign_in: ^5.3.0
   google_sign_in_dartio: ^0.2.0
+  get_storage: ^2.0.3
 
 dev_dependencies:
   flutter_test:

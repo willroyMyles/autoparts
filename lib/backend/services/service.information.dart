@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:wrg3/backend/models/model.post.dart';
 import 'package:wrg3/backend/models/model.userInfo.dart';
+import 'package:wrg3/backend/services/service.localStorage.dart';
 
 class InformationService {
   RxObject<PostModel> posts = RxObject({});
@@ -11,8 +12,14 @@ class InformationService {
     if (userInfo != null) {
       isSignedIn.value = true;
       this.userInfo.value = userInfo;
+
+      serviceStorage.localStorage.write(StorageNames.isSignedIn, true);
+      serviceStorage.localStorage
+          .write(StorageNames.userinfo, userInfo.toJson());
     } else {
       isSignedIn.value = false;
+      serviceStorage.localStorage.write(StorageNames.isSignedIn, false);
+      serviceStorage.localStorage.remove(StorageNames.userinfo);
     }
   }
 }

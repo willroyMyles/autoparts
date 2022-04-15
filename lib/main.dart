@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:wrg3/backend/services/service.localStorage.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
 import 'package:wrg3/frontend/pages/main/view.mainPage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_sign_in_dartio/google_sign_in_dartio.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  if (GetPlatform.isDesktop) {
-    GoogleSignInDart.register(
-        clientId:
-            "312471133667-3dp6nd9l3folfieej3qftibekf4hefa1.apps.googleusercontent.com");
-    print("registered google client id");
-  }
+
   runApp(MyApp());
 }
 
@@ -34,8 +30,16 @@ class MyApp extends StatelessWidget {
 class MainState extends GetxController {
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     Get.lazyPut(() => MainPageState());
+
+    if (GetPlatform.isDesktop) {
+      GoogleSignInDart.register(
+          clientId:
+              "312471133667-3dp6nd9l3folfieej3qftibekf4hefa1.apps.googleusercontent.com");
+      print("registered google client id");
+    }
+
+    GetStorage.init(StorageNames.local);
   }
 }

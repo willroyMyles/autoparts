@@ -8,23 +8,13 @@ import 'package:wrg3/backend/network/baseExecutor.dart';
 import 'package:wrg3/backend/services/service.information.dart';
 
 mixin UserInfoExecutor {
-  final path = "/user-info";
-
-  // Future<dynamic>  userInfo_GetUserInfo_CreateUserInfoIfDoesNotExsis(dynamic data) async {
-  //   try{
-  //   var res = await baseEx.read(path)
-  //   var res = await baseEx.create(path, data: data, params: params);
-  //   return Future.value(res);
-  //   }catch(e){
-
-  //   }
-  // }
+  final userinfoPath = "/user-info";
 
   @protected
   Future<dynamic> userInfo_CreateUserInfo(
       {dynamic data, Map<String, dynamic>? params}) async {
     try {
-      var res = await baseEx.create(path, data: data, params: params);
+      var res = await baseEx.create(userinfoPath, data: data, params: params);
       var userInfo = _convertUserInfo(res);
       infoService.updateUserInfo(userInfo);
       return Future.value(true);
@@ -38,21 +28,21 @@ mixin UserInfoExecutor {
   @protected
   Future<dynamic> userInfo_UpdateUserInfo(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.update(path, data: data, params: params);
+    var res = await baseEx.update(userinfoPath, data: data, params: params);
     return Future.value(res);
   }
 
   @protected
   Future<dynamic> userInfo_GetUserInfo(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.read(path, params: params);
+    var res = await baseEx.read(userinfoPath, params: params);
     return Future.value(res);
   }
 
   @protected
   Future<dynamic> userInfo_DeleteUserInfo(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.delete(path, data: data, params: params);
+    var res = await baseEx.delete(userinfoPath, data: data, params: params);
     return Future.value(res);
   }
 

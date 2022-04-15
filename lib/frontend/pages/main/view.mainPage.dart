@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/frontend/pages/drawer/view.backgroundDrawer.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
 import 'package:wrg3/frontend/pages/posts/view.posts.dart';
@@ -73,7 +74,8 @@ class MainPage extends StatelessWidget {
                     headerSliverBuilder: (context, innerBoxIsScrolled) {
                       return [
                         SliverAppBar(
-                          title: Text(""),
+                          title: Text(
+                              "hello ${infoService.isSignedIn.value ? infoService.userInfo.value.username : ''}"),
                           centerTitle: false,
                           backgroundColor: Colors.transparent,
                           primary: true,

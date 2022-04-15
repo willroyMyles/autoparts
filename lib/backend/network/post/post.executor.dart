@@ -7,26 +7,26 @@ import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/backend/services/service.status.dart';
 
 mixin PostExecutor {
-  final path = "/post";
+  final postPath = "/post";
 
   @protected
   Future<dynamic> postCreatePost(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.create(path, data: data, params: params);
+    var res = await baseEx.create(postPath, data: data, params: params);
     return Future.value(res);
   }
 
   @protected
   Future<dynamic> postUpdatePost(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.update(path, data: data, params: params);
+    var res = await baseEx.update(postPath, data: data, params: params);
     return Future.value(res);
   }
 
   @protected
   Future<dynamic> postGetPost(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.read(path, params: params);
+    var res = await baseEx.read(postPath, params: params);
     return Future.value(res);
   }
 
@@ -35,7 +35,7 @@ mixin PostExecutor {
       {dynamic data, Map<String, dynamic>? params}) async {
     final url = "/posts";
     try {
-      var res = await baseEx.read(path + url, params: params);
+      var res = await baseEx.read(postPath + url, params: params);
       var list = _convertPosts(res);
       infoService.posts.set(list);
       serviceStatus.postStatus.updateStatus(RxStatus.success());
@@ -53,7 +53,7 @@ mixin PostExecutor {
   @protected
   Future<dynamic> postDeletePost(
       {dynamic data, Map<String, dynamic>? params}) async {
-    var res = await baseEx.delete(path, data: data, params: params);
+    var res = await baseEx.delete(postPath, data: data, params: params);
     return Future.value(res);
   }
 
