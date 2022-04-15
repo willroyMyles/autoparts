@@ -6,6 +6,7 @@ class ThemeService {
       scaffoldBackgroundColor: shadowGrey,
       backgroundColor: Colors.red,
       canvasColor: Colors.red,
+      primaryIconTheme: IconThemeData(),
       appBarTheme: AppBarTheme(
           backgroundColor: bgColor,
           centerTitle: true,

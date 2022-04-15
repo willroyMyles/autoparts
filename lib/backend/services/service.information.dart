@@ -1,8 +1,20 @@
 import 'package:get/get.dart';
 import 'package:wrg3/backend/models/model.post.dart';
+import 'package:wrg3/backend/models/model.userInfo.dart';
 
 class InformationService {
   RxObject<PostModel> posts = RxObject({});
+  Rx<UserInfo> userInfo = UserInfo.empty().obs;
+  RxBool isSignedIn = false.obs;
+
+  updateUserInfo(UserInfo? userInfo) {
+    if (userInfo != null) {
+      isSignedIn.value = true;
+      this.userInfo.value = userInfo;
+    } else {
+      isSignedIn.value = false;
+    }
+  }
 }
 
 InformationService _informationService = InformationService();

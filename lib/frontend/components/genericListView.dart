@@ -45,11 +45,17 @@ class GenericListView extends StatelessWidget {
               (status.isLoading ? 3 : 0) +
               (status.isError ? 1 : 0),
           itemBuilder: (context, index) {
-            if (status.isSuccess || status.isLoading && index > 2) {
-              var model = items.elementAt(index);
-              if (itemtype == Itemtype.POST) {
+            if (status.isSuccess || status.isLoading && index > -1) {
+              try {
+                var model = items.elementAt(index);
+                if (itemtype == Itemtype.POST) {
+                  return PostItem(
+                    model: model,
+                  );
+                }
+              } catch (e) {
                 return PostItem(
-                  model: model,
+                  loading: true,
                 );
               }
             }

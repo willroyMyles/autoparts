@@ -19,22 +19,30 @@ class SquareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = small ? 150.0 : 250.0;
-    return InkWell(
-      onTap: () {
-        callback();
-      },
-      child: Container(
-        height: size,
-        width: size,
-        decoration: BoxDecoration(
-            borderRadius: themeService.br,
-            border: Border.all(color: themeService.grey, width: 2),
-            boxShadow: [themeService.primaryShadow]),
-        child: Column(children: [
-          Icon(iconData),
-          Text(text).h2(),
-        ]),
+    var size = small ? 130.0 : 180.0;
+    return Container(
+      margin: EdgeInsets.all(19),
+      child: InkWell(
+        onTap: () {
+          callback();
+        },
+        child: Container(
+          height: size,
+          width: size,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: themeService.br,
+              border: Border.all(color: themeService.grey, width: 2),
+              boxShadow: [themeService.primaryShadow]),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(iconData),
+            ),
+            Text(text).h2(),
+          ]),
+        ),
       ),
     );
   }

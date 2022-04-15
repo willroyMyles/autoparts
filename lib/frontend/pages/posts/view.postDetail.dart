@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hawk_fab_menu/hawk_fab_menu.dart';
 import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/models/model.post.dart';
 import 'package:wrg3/backend/services/service.theme.dart';

@@ -117,6 +117,7 @@ class PostState extends GetxController with CSM {
 
   void getPosts() async {
     serviceStatus.postStatus.updateStatus(RxStatus.loading());
+    await Future.delayed(Duration(seconds: 3));
     await GE.postGetPosts();
   }
 }

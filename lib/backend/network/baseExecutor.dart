@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 
 String get getBaseUrl =>
-    "https://da6b-2605-a200-9501-bd6a-78f1-30b0-bd4b-9e6.ngrok.io";
+    "https://d527-2605-a200-9501-bd6a-7c16-e360-7f3e-2e.ngrok.io".trim();
 
 class BaseExecutor {
   final dio = Dio(BaseOptions(baseUrl: getBaseUrl, headers: {}));
