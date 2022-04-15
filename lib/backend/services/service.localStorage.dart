@@ -4,7 +4,12 @@ class LocalStorage {
   GetStorage localStorage = GetStorage(StorageNames.local);
 
   LocalStorage() {
-    // localStorage.initStorage;
+    setup();
+  }
+
+  setup() async {
+    // await localStorage.initStorage;
+    print(localStorage.getKeys());
   }
 }
 

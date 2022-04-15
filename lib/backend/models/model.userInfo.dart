@@ -51,7 +51,7 @@ class UserInfo {
       'email': email,
       'alias': alias,
       'postId': postId,
-      'createdAt': createdAt.millisecondsSinceEpoch,
+      'createdAt': createdAt.toString(),
     };
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:wrg3/backend/network/general.executor.dart';
 import 'package:wrg3/backend/services/service.localStorage.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
@@ -32,7 +33,10 @@ class MainState extends GetxController {
   void onInit() {
     super.onInit();
     Get.lazyPut(() => MainPageState());
+    setUp();
+  }
 
+  setUp() async {
     if (GetPlatform.isDesktop) {
       GoogleSignInDart.register(
           clientId:
@@ -40,6 +44,7 @@ class MainState extends GetxController {
       print("registered google client id");
     }
 
-    GetStorage.init(StorageNames.local);
+    await GetStorage.init(StorageNames.local);
+    GE.checkUserSignedIn();
   }
 }

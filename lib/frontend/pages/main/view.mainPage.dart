@@ -74,8 +74,10 @@ class MainPage extends StatelessWidget {
                     headerSliverBuilder: (context, innerBoxIsScrolled) {
                       return [
                         SliverAppBar(
-                          title: Text(
-                              "hello ${infoService.isSignedIn.value ? infoService.userInfo.value.username : ''}"),
+                          title: Obx(() {
+                            return Text(
+                                "hello ${infoService.isSignedIn.value ? infoService.userInfo.value.username : ''}");
+                          }),
                           centerTitle: false,
                           backgroundColor: Colors.transparent,
                           primary: true,

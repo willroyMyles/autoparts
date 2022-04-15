@@ -21,6 +21,8 @@ class InformationService {
       serviceStorage.localStorage.write(StorageNames.isSignedIn, false);
       serviceStorage.localStorage.remove(StorageNames.userinfo);
     }
+
+    isSignedIn.refresh();
   }
 }
 
