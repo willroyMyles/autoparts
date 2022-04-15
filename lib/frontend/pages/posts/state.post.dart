@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrg3/backend/extension/ext.dart';
+import 'package:wrg3/backend/mixins/customStateMixin.dart';
+import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/components/expandingButton.dart';
 
-class PostState extends GetxController {
+import '../../../backend/network/general.executor.dart';
+
+class PostState extends GetxController with CSM {
   shouldRefresh() {
     refresh();
   }
@@ -103,5 +107,16 @@ class PostState extends GetxController {
         ),
       ]),
     );
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    serviceStatus.postStatus.setCallback(this.refresh);
+  }
+
+  void getPosts() async {
+    serviceStatus.postStatus.updateStatus(RxStatus.loading());
+    await GE.postGetPosts();
   }
 }

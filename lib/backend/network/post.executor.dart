@@ -1,9 +1,10 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wrg3/backend/models/model.post.dart';
 import 'package:wrg3/backend/network/baseExecutor.dart';
 import 'package:wrg3/backend/services/service.information.dart';
+import 'package:wrg3/backend/services/service.status.dart';
 
 mixin PostExecutor {
   final path = "/post";
@@ -37,8 +38,12 @@ mixin PostExecutor {
       var res = await baseEx.read(path + url, params: params);
       var list = _convertPosts(res);
       infoService.posts.set(list);
+      serviceStatus.postStatus.updateStatus(RxStatus.success());
+
       return Future.value(res);
     } catch (e) {
+      serviceStatus.postStatus
+          .updateStatus(RxStatus.error("Unable to get posts"));
       if (kDebugMode) {
         print("error");
       }
@@ -52,7 +57,7 @@ mixin PostExecutor {
     return Future.value(res);
   }
 
-  List<PostModel> _convertPosts(Response<dynamic> posts) {
+  List<PostModel> _convertPosts(dio.Response<dynamic> posts) {
     try {
       List<PostModel> list = [];
       for (var data in posts.data) {

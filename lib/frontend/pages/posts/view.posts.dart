@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrg3/backend/enums/enum.itemType.dart';
 import 'package:wrg3/backend/services/service.information.dart';
+import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/components/genericListView.dart';
 import 'package:wrg3/frontend/pages/posts/state.post.dart';
@@ -20,13 +21,14 @@ class PostView extends StatelessWidget {
         child: Column(children: [
           Expanded(
               child: GenericListView(
+            status: serviceStatus.postStatus.status.value,
             items: infoService.posts.list,
             itemtype: Itemtype.POST,
+            onRefresh: controller.getPosts,
           )),
           TextButton(
               onPressed: () async {
-                await GE.postGetPosts();
-                controller.shouldRefresh();
+                controller.getPosts();
                 Get.changeTheme(Get.isDarkMode
                     ? themeService.lightTheme
                     : themeService.darkTheme);

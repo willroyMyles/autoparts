@@ -10,7 +10,11 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: InkWell(
         onTap: () {},
+        radius: 50,
+        borderRadius: BorderRadius.circular(50),
+        splashColor: Colors.white,
         child: Container(
+            clipBehavior: Clip.antiAlias,
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.secondary,
@@ -46,7 +50,8 @@ class MainPage extends StatelessWidget {
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                title: Text("home page"),
+                title: Text(""),
+                centerTitle: false,
                 backgroundColor: Colors.transparent,
                 primary: true,
                 leading: Icon(CupertinoIcons.text_justifyright),
