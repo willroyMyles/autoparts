@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wrg3/backend/network/general.executor.dart';
+import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/frontend/pages/login/view.login.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
 
@@ -49,16 +51,28 @@ class BackgroundDrawer extends StatelessWidget {
               horizontalTitleGap: 2,
             ),
             Spacer(),
-            ListTile(
-              onTap: () {
-                Get.to(() => LoginView());
-              },
-              title: Text("login"),
-              hoverColor: Colors.white,
-              subtitle: Text("click to login"),
-              leading: Icon(Icons.exit_to_app_rounded),
-              horizontalTitleGap: 2,
-            )
+            if (!infoService.isSignedIn.value)
+              ListTile(
+                onTap: () {
+                  Get.to(() => LoginView());
+                },
+                title: Text("login"),
+                hoverColor: Colors.white,
+                subtitle: Text("click to login"),
+                leading: Icon(Icons.login),
+                horizontalTitleGap: 2,
+              ),
+            if (infoService.isSignedIn.value)
+              ListTile(
+                onTap: () {
+                  GE.signOut();
+                },
+                title: Text("log out"),
+                hoverColor: Colors.white,
+                subtitle: Text("click to sign out"),
+                leading: Icon(Icons.logout_outlined),
+                horizontalTitleGap: 2,
+              )
           ],
         ),
       ),

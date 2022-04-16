@@ -30,6 +30,8 @@ mixin LoginExecutor {
 
   signOut() {
     _googleSignIn.signOut();
+    serviceStorage.localStorage.write(StorageNames.isSignedIn, false);
+    serviceStorage.localStorage.remove(StorageNames.userinfo);
   }
 
   signInLocally(Map<String, dynamic> params) async {
