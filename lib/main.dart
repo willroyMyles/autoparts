@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wrg3/backend/network/general.executor.dart';
+import 'package:wrg3/backend/services/service.carData.dart';
 import 'package:wrg3/backend/services/service.localStorage.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
@@ -46,5 +47,6 @@ class MainState extends GetxController {
 
     await GetStorage.init(StorageNames.local);
     GE.checkUserSignedIn();
+    print(serviceCarData.makes);
   }
 }

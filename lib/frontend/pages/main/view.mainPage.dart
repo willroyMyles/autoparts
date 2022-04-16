@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrg3/backend/services/service.information.dart';
+import 'package:wrg3/frontend/pages/create%20post/view.createPost.dart';
 import 'package:wrg3/frontend/pages/drawer/view.backgroundDrawer.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
 import 'package:wrg3/frontend/pages/posts/view.posts.dart';
@@ -32,7 +33,9 @@ class MainPage extends StatelessWidget {
               ]),
               child: Scaffold(
                 floatingActionButton: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => CreatePost());
+                  },
                   radius: 50,
                   borderRadius: BorderRadius.circular(50),
                   splashColor: Colors.white,
