@@ -44,7 +44,8 @@ mixin PostExecutor {
       var res = await baseEx.read(postPath + url, params: params);
       var list = _convertPosts(res);
       infoService.posts.set(list);
-      serviceStatus.postStatus.updateStatus(RxStatus.success());
+      serviceStatus.postStatus.updateStatus(
+          list.isNotEmpty ? RxStatus.success() : RxStatus.empty());
 
       return Future.value(res);
     } catch (e) {

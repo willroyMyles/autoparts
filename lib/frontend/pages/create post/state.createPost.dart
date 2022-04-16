@@ -58,7 +58,7 @@ class CreatePostState extends GetxController {
 
   onSubmit() async {
     var ans = formKey.currentState!.validate();
-    if (!ans) throw "needs validation";
+    if (!ans) throw "fields cannot be empty";
     var map = {
       "title": controls["title"]!.text,
       "content": controls["content"]!.text,

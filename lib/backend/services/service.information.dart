@@ -33,7 +33,7 @@ class RxObject<T> extends Rx<Map<dynamic, dynamic>> {
   RxObject(Map initial) : super(initial);
 
   set(List<dynamic> list) {
-    value.clear();
+    // value.clear();
     for (var item in list) {
       value.update(
         item.id,

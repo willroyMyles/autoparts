@@ -69,6 +69,7 @@ class PostDetailView extends StatelessWidget {
             elevation: 0,
             pinned: true,
             primary: true,
+            backgroundColor: Colors.transparent,
           ),
           SliverToBoxAdapter(
               child: Container(

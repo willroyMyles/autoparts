@@ -56,8 +56,25 @@ class _SquareButtonWithStatusState extends State<SquareButtonWithStatus> {
             });
           } catch (e) {
             setState(() {
-              status = RxStatus.error();
+              status = RxStatus.error(e.toString());
             });
+            Get.showSnackbar(
+              GetSnackBar(
+                message: status.errorMessage,
+                icon: Icon(
+                  CupertinoIcons.exclamationmark_circle,
+                  color: Colors.red,
+                  size: 30,
+                ),
+                duration: Duration(seconds: 2),
+                margin: EdgeInsets.all(5),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                borderRadius: 5,
+                barBlur: 10,
+                overlayColor: Colors.red,
+                leftBarIndicatorColor: Colors.red,
+              ),
+            );
             Future.delayed(Duration(seconds: 2), () {
               setState(() {
                 status = RxStatus.empty();

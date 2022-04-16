@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/mixins/customStateMixin.dart';
+import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/components/expandingButton.dart';
@@ -119,5 +120,13 @@ class PostState extends GetxController with CSM {
     serviceStatus.postStatus.updateStatus(RxStatus.loading());
     await Future.delayed(Duration(seconds: 3));
     await GE.postGetPosts();
+  }
+
+  void getMorePosts() async {
+    serviceStatus.postStatus.updateStatus(RxStatus.loading());
+    var params = {"lastId": infoService.posts.list.last.id, "amount": 5};
+    await Future.delayed(Duration(seconds: 3));
+
+    await GE.postGetPosts(params: params);
   }
 }

@@ -11,6 +11,7 @@ class GenericListView extends StatelessWidget {
   final List<dynamic> items;
   final bool refresh;
   final Function? onRefresh;
+  final Function? onEndReachCallback;
   final Itemtype itemtype;
   final RxStatus status;
   GenericListView(
@@ -19,7 +20,8 @@ class GenericListView extends StatelessWidget {
       this.refresh = false,
       this.onRefresh,
       required this.itemtype,
-      required this.status})
+      required this.status,
+      this.onEndReachCallback})
       : super(key: key);
 
   bool onEndReached = false;
@@ -32,6 +34,11 @@ class GenericListView extends StatelessWidget {
 
   void _onEndReachedCallback() async {
     print("object");
+    if (!status.isEmpty) {
+      if (onEndReachCallback != null) {
+        onEndReachCallback!();
+      }
+    }
     onEndReached = true;
   }
 
@@ -43,8 +50,26 @@ class GenericListView extends StatelessWidget {
         child: ListView.builder(
           itemCount: items.length +
               (status.isLoading ? 3 : 0) +
-              (status.isError ? 1 : 0),
+              (status.isError ? 1 : 0) +
+              (status.isEmpty ? 1 : 0),
           itemBuilder: (context, index) {
+            if (status.isEmpty) {
+              try {
+                var model = items.elementAt(index);
+                if (itemtype == Itemtype.POST) {
+                  return PostItem(
+                    model: model,
+                  );
+                }
+              } catch (e) {
+                return Container(
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.all(25),
+                  margin: EdgeInsets.all(25),
+                  child: Text("no more posts"),
+                );
+              }
+            }
             if (status.isSuccess || status.isLoading && index > -1) {
               try {
                 var model = items.elementAt(index);

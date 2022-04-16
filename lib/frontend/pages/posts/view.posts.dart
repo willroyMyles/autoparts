@@ -25,6 +25,7 @@ class PostView extends StatelessWidget {
             items: infoService.posts.list,
             itemtype: Itemtype.POST,
             onRefresh: controller.getPosts,
+            onEndReachCallback: controller.getMorePosts,
           )),
           TextButton(
               onPressed: () async {
