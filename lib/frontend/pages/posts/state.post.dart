@@ -6,6 +6,7 @@ import 'package:wrg3/backend/mixins/customStateMixin.dart';
 import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
+import 'package:wrg3/frontend/components/bottomSheetCloseButton.dart';
 import 'package:wrg3/frontend/components/expandingButton.dart';
 
 import '../../../backend/network/general.executor.dart';
@@ -80,34 +81,53 @@ class PostState extends GetxController with CSM {
 
   Widget getBottomSheet() {
     return Container(
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        ListTile(
-          title: Text("Ask a question").h2(),
-          minVerticalPadding: 5,
-          leading: Icon(Icons.question_mark_rounded),
-          onTap: () {
-            askAQuestion();
-          },
-        ),
-        ListTile(
-          title: Text("Make an offer").h2(),
-          minVerticalPadding: 5,
-          leading: Icon(Icons.clean_hands_outlined),
-          onTap: () {
-            makeAnOffer();
-          },
-        ),
-        ListTile(
-          tileColor: Colors.red,
-          title: Text("Add to watching").h2(),
-          minVerticalPadding: 5,
-          leading: Icon(CupertinoIcons.eyeglasses, color: Colors.black),
-          onTap: () {
-            addToWatch();
-          },
-        ),
-      ]),
-    );
+        padding: EdgeInsets.symmetric(horizontal: 15),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      title: Text("Ask a question").h2(),
+                      minVerticalPadding: 5,
+                      leading: Icon(Icons.question_mark_rounded),
+                      onTap: () {
+                        askAQuestion();
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      title: Text("Make an offer").h2(),
+                      minVerticalPadding: 5,
+                      leading: Icon(Icons.clean_hands_outlined),
+                      onTap: () {
+                        makeAnOffer();
+                      },
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 4),
+                    child: ListTile(
+                      tileColor: Colors.red,
+                      title: Text("Add to watching").h2(),
+                      minVerticalPadding: 5,
+                      leading:
+                          Icon(CupertinoIcons.eyeglasses, color: Colors.black),
+                      onTap: () {
+                        addToWatch();
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+            BottomSheetCloseButton()
+          ],
+        ));
   }
 
   @override
