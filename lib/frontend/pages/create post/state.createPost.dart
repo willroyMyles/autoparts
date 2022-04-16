@@ -67,12 +67,11 @@ class CreatePostState extends GetxController {
       "model": controls["model"]!.text,
       "year": int.tryParse(controls["year"]!.text),
     };
-    await GE.postCreatePost(data: map);
+    await GE.post_createPost(data: map);
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
     controls.forEach((key, value) {
       value.dispose();

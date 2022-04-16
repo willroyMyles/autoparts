@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -9,8 +11,17 @@ import 'package:wrg3/backend/services/service.status.dart';
 mixin PostExecutor {
   final postPath = "/post";
 
-  @protected
-  Future<dynamic> postCreatePost(
+  Future<dynamic> post_incrimentView(String id,
+      {Map<String, dynamic>? params}) async {
+    try {
+      var res = await baseEx.update(postPath + "/view/$id");
+      return Future.value(true);
+    } catch (e) {
+      return Future.value(false);
+    }
+  }
+
+  Future<dynamic> post_createPost(
       {dynamic data, Map<String, dynamic>? params}) async {
     if (params != null) {
       params.putIfAbsent("userId", () => infoService.userInfo.value.userId);
@@ -22,22 +33,19 @@ mixin PostExecutor {
     return Future.value(res);
   }
 
-  @protected
-  Future<dynamic> postUpdatePost(
+  Future<dynamic> post_updatePost(
       {dynamic data, Map<String, dynamic>? params}) async {
     var res = await baseEx.update(postPath, data: data, params: params);
     return Future.value(res);
   }
 
-  @protected
-  Future<dynamic> postGetPost(
+  Future<dynamic> post_getPost(
       {dynamic data, Map<String, dynamic>? params}) async {
     var res = await baseEx.read(postPath, params: params);
     return Future.value(res);
   }
 
-  @protected
-  Future<dynamic> postGetPosts(
+  Future<dynamic> post_getPosts(
       {dynamic data, Map<String, dynamic>? params}) async {
     final url = "/posts";
     try {
@@ -57,7 +65,6 @@ mixin PostExecutor {
     }
   }
 
-  @protected
   Future<dynamic> postDeletePost(
       {dynamic data, Map<String, dynamic>? params}) async {
     var res = await baseEx.delete(postPath, data: data, params: params);

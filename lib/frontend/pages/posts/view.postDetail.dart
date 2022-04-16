@@ -16,25 +16,33 @@ class PostDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          var ans = await Get.bottomSheet(
-              BottomSheetCustom(
-                child: controller.getBottomSheet(),
-              ),
-              isScrollControlled: false,
-              ignoreSafeArea: true,
-              isDismissible: true);
-          if (kDebugMode) {
-            print(ans);
-          }
+      floatingActionButton: GetBuilder<PostState>(
+        init: controller,
+        initState: (_) {
+          controller.setCurrentPost(model);
         },
-        child: Icon(Icons.menu),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        tooltip: "Options",
-        disabledElevation: 0,
-        elevation: 10,
-        focusElevation: 15,
+        builder: (_) {
+          return FloatingActionButton(
+            onPressed: () async {
+              var ans = await Get.bottomSheet(
+                  BottomSheetCustom(
+                    child: controller.getBottomSheet(),
+                  ),
+                  isScrollControlled: false,
+                  ignoreSafeArea: true,
+                  isDismissible: true);
+              if (kDebugMode) {
+                print(ans);
+              }
+            },
+            child: Icon(Icons.menu),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+            tooltip: "Options",
+            disabledElevation: 0,
+            elevation: 10,
+            focusElevation: 15,
+          );
+        },
       ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       // bottomNavigationBar: Container(
@@ -131,85 +139,87 @@ class PostDetailView extends StatelessWidget {
               ),
             ]),
           )),
-          SliverAppBar(
-            primary: false,
-            toolbarHeight: 65,
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.transparent,
-            title: Opacity(
-              opacity: .7,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 0),
-                    width: 55,
-                    height: 55,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${model.watching}",
-                          textScaleFactor: .8,
-                        ),
-                        Icon(CupertinoIcons.eyeglasses),
-                      ],
+          GetBuilder<PostState>(builder: (_) {
+            return SliverAppBar(
+              primary: false,
+              toolbarHeight: 65,
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.transparent,
+              title: Opacity(
+                opacity: .7,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 0),
+                      width: 55,
+                      height: 55,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${model.watching}",
+                            textScaleFactor: .8,
+                          ),
+                          Icon(CupertinoIcons.eyeglasses),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    width: 55,
-                    height: 55,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${model.views}",
-                          textScaleFactor: .8,
-                        ),
-                        Icon(CupertinoIcons.eye),
-                      ],
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15),
+                      width: 55,
+                      height: 55,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${model.views}",
+                            textScaleFactor: .8,
+                          ),
+                          Icon(CupertinoIcons.eye),
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 0),
-                    width: 55,
-                    height: 55,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(.0),
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                              blurRadius: 1,
-                              color: Colors.black.withOpacity(.0))
-                        ]),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "${model.commentss}",
-                          textScaleFactor: .8,
-                        ),
-                        Icon(CupertinoIcons.chat_bubble),
-                      ],
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 0),
+                      width: 55,
+                      height: 55,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(.0),
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 1,
+                                color: Colors.black.withOpacity(.0))
+                          ]),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${model.commentss}",
+                            textScaleFactor: .8,
+                          ),
+                          Icon(CupertinoIcons.chat_bubble),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
+            );
+          })
           // SliverAppBar(
           //   automaticallyImplyLeading: false,
           //   primary: false,

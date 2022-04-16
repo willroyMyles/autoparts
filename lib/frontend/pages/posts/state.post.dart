@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/mixins/customStateMixin.dart';
+import 'package:wrg3/backend/models/model.post.dart';
 import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
@@ -12,6 +13,8 @@ import 'package:wrg3/frontend/components/expandingButton.dart';
 import '../../../backend/network/general.executor.dart';
 
 class PostState extends GetxController with CSM {
+  late PostModel currentPost;
+
   shouldRefresh() {
     refresh();
   }
@@ -139,7 +142,7 @@ class PostState extends GetxController with CSM {
   void getPosts() async {
     serviceStatus.postStatus.updateStatus(RxStatus.loading());
     await Future.delayed(Duration(seconds: 3));
-    await GE.postGetPosts();
+    await GE.post_getPosts();
   }
 
   void getMorePosts() async {
@@ -147,6 +150,21 @@ class PostState extends GetxController with CSM {
     var params = {"lastId": infoService.posts.list.last.id, "amount": 5};
     await Future.delayed(Duration(seconds: 3));
 
-    await GE.postGetPosts(params: params);
+    await GE.post_getPosts(params: params);
+  }
+
+  void updateWatching() async {
+    var res = await GE.post_incrimentView(currentPost.id);
+    if (res) {
+      //update view
+      currentPost.views++;
+      infoService.posts.updateMap(currentPost);
+      refresh();
+    }
+  }
+
+  void setCurrentPost(PostModel model) {
+    currentPost = model;
+    updateWatching();
   }
 }
