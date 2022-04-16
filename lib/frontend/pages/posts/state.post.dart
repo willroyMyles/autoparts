@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/mixins/customStateMixin.dart';
 import 'package:wrg3/backend/models/model.post.dart';
+import 'package:wrg3/backend/models/model.question.dart';
 import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
@@ -64,12 +65,14 @@ class PostState extends GetxController with CSM {
 
   askAQuestion() async {
     Get.close(1);
+    TextEditingController tec = TextEditingController();
     Get.dialog(AlertDialog(
       title: Text("whats your question?").h3(),
       content: TextField(
         decoration: InputDecoration(label: Text("write your question here")),
         maxLines: 5,
         autofocus: true,
+        controller: tec,
       ),
       actions: [
         TextButton(
@@ -77,7 +80,21 @@ class PostState extends GetxController with CSM {
               Get.close(1);
             },
             child: Text("Cancel")),
-        TextButton(onPressed: () {}, child: Text("Submit")),
+        TextButton(
+            onPressed: () {
+              // QuestionModel model = QuestionModel.empty();
+              // model.content = tec.text;
+              // model.postId = currentPost.id;
+              // model.userInfoId = infoService.userInfo.value.userId;
+
+              var map = {
+                "content": tec.text,
+                "postId": currentPost.id,
+                "userInfoId": infoService.userInfo.value.id
+              };
+              GE.question_createQuestion(data: map);
+            },
+            child: Text("Submit")),
       ],
     ));
   }
