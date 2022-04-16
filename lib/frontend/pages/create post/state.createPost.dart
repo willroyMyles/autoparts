@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:wrg3/backend/network/general.executor.dart';
 import 'package:wrg3/backend/services/service.carData.dart';
 
 class CreatePostState extends GetxController {
   Map<String, TextEditingController> controls = {};
+  final formKey = GlobalKey<FormState>();
 
   int make = 0;
   int model = -1;
@@ -52,6 +54,20 @@ class CreatePostState extends GetxController {
       value.clear();
     });
     refresh();
+  }
+
+  onSubmit() async {
+    var ans = formKey.currentState!.validate();
+    if (!ans) throw "needs validation";
+    var map = {
+      "title": controls["title"]!.text,
+      "content": controls["content"]!.text,
+      "category": controls["category"]!.text,
+      "make": controls["make"]!.text,
+      "model": controls["model"]!.text,
+      "year": int.tryParse(controls["year"]!.text),
+    };
+    await GE.postCreatePost(data: map);
   }
 
   @override

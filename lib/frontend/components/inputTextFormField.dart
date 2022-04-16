@@ -48,6 +48,11 @@ class InputTextFormField extends StatelessWidget {
             child: TextFormField(
               controller: crtl,
               maxLines: multiLine ? 5 : 1,
+              validator: (text) {
+                if (text!.isEmpty) {
+                  return "$label can not be empty";
+                }
+              },
               decoration: InputDecoration(
                   filled: true,
                   fillColor: Colors.white,

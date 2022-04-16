@@ -12,6 +12,12 @@ mixin PostExecutor {
   @protected
   Future<dynamic> postCreatePost(
       {dynamic data, Map<String, dynamic>? params}) async {
+    if (params != null) {
+      params.putIfAbsent("userId", () => infoService.userInfo.value.userId);
+    } else {
+      params = {};
+      params.putIfAbsent("userId", () => infoService.userInfo.value.userId);
+    }
     var res = await baseEx.create(postPath, data: data, params: params);
     return Future.value(res);
   }

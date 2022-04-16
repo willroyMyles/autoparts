@@ -5,6 +5,7 @@ import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/services/service.carData.dart';
 import 'package:wrg3/frontend/components/inputOptionFormField.dart';
 import 'package:wrg3/frontend/components/squareButton.dart';
+import 'package:wrg3/frontend/components/squareButtonwithStatus.dart';
 import 'package:wrg3/frontend/pages/create%20post/state.createPost.dart';
 
 import '../../../backend/services/service.theme.dart';
@@ -23,6 +24,7 @@ class CreatePost extends StatelessWidget {
       body: GetBuilder<CreatePostState>(builder: (con) {
         return SingleChildScrollView(
             child: Form(
+          key: controller.formKey,
           child: Container(
             padding: EdgeInsets.all(15),
             child: Column(children: [
@@ -101,11 +103,11 @@ class CreatePost extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              SquareButton(
+              SquareButtonWithStatus(
                   small: true,
                   text: "submit",
                   iconData: CupertinoIcons.paperplane,
-                  callback: () {}),
+                  callback: controller.onSubmit),
               SizedBox(
                 height: 30,
               ),

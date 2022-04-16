@@ -101,6 +101,11 @@ class InputOptionFormField extends StatelessWidget {
               child: LayoutBuilder(builder: (context, con) {
                 return IgnorePointer(
                   child: TextFormField(
+                    validator: (text) {
+                      if (text!.isEmpty) {
+                        return "$label can not be empty";
+                      }
+                    },
                     controller: crtl,
                     decoration: InputDecoration(
                         filled: true,
