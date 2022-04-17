@@ -6,6 +6,7 @@ import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/models/model.post.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/components/bottomSheet.dart';
+import 'package:wrg3/frontend/pages/components/question/view.questionComp.dart';
 import 'package:wrg3/frontend/pages/posts/state.post.dart';
 
 class PostDetailView extends StatelessWidget {
@@ -219,7 +220,7 @@ class PostDetailView extends StatelessWidget {
                 ),
               ),
             );
-          })
+          }),
           // SliverAppBar(
           //   automaticallyImplyLeading: false,
           //   primary: false,
@@ -236,7 +237,13 @@ class PostDetailView extends StatelessWidget {
           //       TextButton(onPressed: () {}, child: Text("comment")),
           //     ]),
           //   ),
-          // )
+          // ),
+
+          SliverToBoxAdapter(
+            child: QuestionComponent(
+              model: model,
+            ),
+          )
         ],
       ),
     );

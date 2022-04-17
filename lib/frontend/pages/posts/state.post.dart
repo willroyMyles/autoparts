@@ -82,11 +82,6 @@ class PostState extends GetxController with CSM {
             child: Text("Cancel")),
         TextButton(
             onPressed: () {
-              // QuestionModel model = QuestionModel.empty();
-              // model.content = tec.text;
-              // model.postId = currentPost.id;
-              // model.userInfoId = infoService.userInfo.value.userId;
-
               var map = {
                 "content": tec.text,
                 "postId": currentPost.id,

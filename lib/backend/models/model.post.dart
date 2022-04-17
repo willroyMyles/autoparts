@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:wrg3/backend/services/service.information.dart';
+
 import '../enums/enum.status.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -163,4 +165,7 @@ class PostModel {
   }
 
   String get getCreateDate => timeago.format(createdAt!);
+  bool get isOwner =>
+      infoService.isSignedIn.value &&
+      userInfoId == infoService.userInfo.value.userId;
 }
