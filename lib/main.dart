@@ -5,6 +5,7 @@ import 'package:wrg3/backend/network/general.executor.dart';
 import 'package:wrg3/backend/services/service.carData.dart';
 import 'package:wrg3/backend/services/service.localStorage.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
+import 'package:wrg3/frontend/pages/components/question/state.questionComp.dart';
 import 'package:wrg3/frontend/pages/main/state.mainPage.dart';
 import 'package:wrg3/frontend/pages/main/view.mainPage.dart';
 import 'package:google_sign_in_dartio/google_sign_in_dartio.dart';
@@ -34,6 +35,7 @@ class MainState extends GetxController {
   void onInit() {
     super.onInit();
     Get.lazyPut(() => MainPageState());
+    // Get.lazyPut(() => QuestionCompState());
     setUp();
   }
 

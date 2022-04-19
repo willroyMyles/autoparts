@@ -1,18 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:wrg3/backend/models/model.question.dart';
 import 'package:wrg3/backend/network/baseExecutor.dart';
+import 'package:wrg3/backend/services/service.information.dart';
 
 mixin QuestionExecutor {
   final String questionPath = "/question";
 
-  Future<dynamic> question_createQuestion(
+  Future<QuestionModel> question_createQuestion(
       {dynamic data, Map<String, dynamic>? params}) async {
     try {
       var res = await baseEx.create(questionPath, data: data, params: params);
-      return Future.value(res);
+      //update post with new question
+      var question = _convertQuestion(res);
+
+      return Future.value(question);
     } catch (e) {
       print(e);
-      return Future.value(false);
+      return Future.error(false);
     }
   }
 
@@ -35,5 +39,11 @@ mixin QuestionExecutor {
       list.add(mod);
     }
     return list;
+  }
+
+  QuestionModel _convertQuestion(Response<dynamic> data) {
+    QuestionModel mod = QuestionModel.fromMap(data.data);
+
+    return mod;
   }
 }

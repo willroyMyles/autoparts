@@ -6,6 +6,8 @@ import 'package:wrg3/backend/extension/ext.dart';
 import 'package:wrg3/backend/models/model.post.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
 import 'package:wrg3/frontend/components/bottomSheet.dart';
+import 'package:wrg3/frontend/components/buttonWithStatus.dart';
+import 'package:wrg3/frontend/pages/components/offer/view.offerComp.dart';
 import 'package:wrg3/frontend/pages/components/question/view.questionComp.dart';
 import 'package:wrg3/frontend/pages/posts/state.post.dart';
 
@@ -76,7 +78,7 @@ class PostDetailView extends StatelessWidget {
           SliverAppBar(
             title: Text(model.title),
             elevation: 0,
-            pinned: true,
+            floating: true,
             primary: true,
             backgroundColor: Colors.transparent,
           ),
@@ -243,7 +245,13 @@ class PostDetailView extends StatelessWidget {
             child: QuestionComponent(
               model: model,
             ),
-          )
+          ),
+
+          SliverToBoxAdapter(
+            child: OfferComp(model: model),
+          ),
+
+          SliverPadding(padding: EdgeInsets.symmetric(vertical: 50))
         ],
       ),
     );

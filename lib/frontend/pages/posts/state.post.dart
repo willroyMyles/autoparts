@@ -8,10 +8,14 @@ import 'package:wrg3/backend/models/model.question.dart';
 import 'package:wrg3/backend/services/service.information.dart';
 import 'package:wrg3/backend/services/service.status.dart';
 import 'package:wrg3/backend/services/service.theme.dart';
+import 'package:wrg3/frontend/components/alertBox.dart';
 import 'package:wrg3/frontend/components/bottomSheetCloseButton.dart';
 import 'package:wrg3/frontend/components/expandingButton.dart';
+import 'package:wrg3/frontend/pages/components/offer/state.offerComp.dart';
+import 'package:wrg3/frontend/pages/components/question/state.questionComp.dart';
 
 import '../../../backend/network/general.executor.dart';
+import '../../components/buttonWithStatus.dart';
 
 class PostState extends GetxController with CSM {
   late PostModel currentPost;
@@ -22,26 +26,24 @@ class PostState extends GetxController with CSM {
 
   makeAnOffer() async {
     Get.close(1);
-    Get.dialog(AlertDialog(
-      title: Text("make your offer").h3(),
-      content: TextField(
-        decoration: InputDecoration(label: Text("write your offer here")),
-        maxLines: 5,
-        autofocus: true,
-      ),
-      alignment: Alignment.center,
-      actionsAlignment: MainAxisAlignment.center,
-      actions: [
-        ExpandingButton(
-          text: "cancel",
-          level: EBLevel.Secondary,
-        ),
-        ExpandingButton(
-          text: "Submit",
-          level: EBLevel.Primary,
-        ),
-      ],
-    ));
+    TextEditingController tec = TextEditingController();
+
+    Get.dialog(AlertBox(
+        promptText: "write your offer here",
+        tec: tec,
+        callback: () async {
+          var map = {
+            "message": tec.text,
+            "postId": currentPost.id,
+            "senderId": infoService.userInfo.value.id,
+            "recieverId": currentPost.userInfo!.id
+          };
+          var ques = await GE.offer_createoffer(data: map);
+          OfferCompState offerState = Get.find();
+
+          offerState.displayList.putIfAbsent(ques.id, () => ques);
+          offerState.refresh();
+        }));
   }
 
   showLeaveComment() {}
@@ -66,32 +68,21 @@ class PostState extends GetxController with CSM {
   askAQuestion() async {
     Get.close(1);
     TextEditingController tec = TextEditingController();
-    Get.dialog(AlertDialog(
-      title: Text("whats your question?").h3(),
-      content: TextField(
-        decoration: InputDecoration(label: Text("write your question here")),
-        maxLines: 5,
-        autofocus: true,
-        controller: tec,
-      ),
-      actions: [
-        TextButton(
-            onPressed: () {
-              Get.close(1);
-            },
-            child: Text("Cancel")),
-        TextButton(
-            onPressed: () {
-              var map = {
-                "content": tec.text,
-                "postId": currentPost.id,
-                "userInfoId": infoService.userInfo.value.id
-              };
-              GE.question_createQuestion(data: map);
-            },
-            child: Text("Submit")),
-      ],
-    ));
+    Get.dialog(AlertBox(
+        promptText: "write your question here",
+        tec: tec,
+        callback: () async {
+          var map = {
+            "content": tec.text,
+            "postId": currentPost.id,
+            "userInfoId": infoService.userInfo.value.id
+          };
+          var ques = await GE.question_createQuestion(data: map);
+          QuestionCompState questionCompState = Get.find();
+
+          questionCompState.displayList.putIfAbsent(ques.id, () => ques);
+          questionCompState.refresh();
+        }));
   }
 
   Widget getBottomSheet() {

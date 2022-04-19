@@ -1,9 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
+import 'package:timeago/timeago.dart' as timeago;
+
+import 'package:wrg3/backend/models/model.userInfo.dart';
 import 'package:wrg3/backend/services/service.information.dart';
 
 import '../enums/enum.status.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class PostModel {
   String title = "";
@@ -18,6 +21,7 @@ class PostModel {
   int commentss = 0;
   DateTime? createdAt;
   String? userInfoId;
+  UserInfo? userInfo;
   // UserInfoModel userInfo;
   Status status = Status.OPEN;
   PostModel({
@@ -33,6 +37,7 @@ class PostModel {
     required this.commentss,
     this.createdAt,
     this.userInfoId,
+    this.userInfo,
     required this.status,
   });
   // List<OfferModel> offers = [];
@@ -50,6 +55,7 @@ class PostModel {
     int? commentss,
     DateTime? createdAt,
     String? userInfoId,
+    UserInfo? userInfo,
     Status? status,
   }) {
     return PostModel(
@@ -65,32 +71,28 @@ class PostModel {
       commentss: commentss ?? this.commentss,
       createdAt: createdAt ?? this.createdAt,
       userInfoId: userInfoId ?? this.userInfoId,
+      userInfo: userInfo ?? this.userInfo,
       status: status ?? this.status,
     );
   }
 
   Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'title': title});
-    result.addAll({'id': id});
-    result.addAll({'content': content});
-    result.addAll({'category': category});
-    result.addAll({'make': make});
-    result.addAll({'model': model});
-    result.addAll({'year': year});
-    result.addAll({'views': views});
-    result.addAll({'watching': watching});
-    result.addAll({'commentss': commentss});
-    if (createdAt != null) {
-      result.addAll({'createdAt': createdAt!.millisecondsSinceEpoch});
-    }
-    if (userInfoId != null) {
-      result.addAll({'userInfoId': userInfoId});
-    }
-    // result.addAll({'status': status.toMap()});
-
-    return result;
+    return <String, dynamic>{
+      'title': title,
+      'id': id,
+      'content': content,
+      'category': category,
+      'make': make,
+      'model': model,
+      'year': year,
+      'views': views,
+      'watching': watching,
+      'commentss': commentss,
+      'createdAt': createdAt?.millisecondsSinceEpoch,
+      'userInfoId': userInfoId,
+      // 'userInfo': userInfo?.toMap(),
+      // 'status': status.toMap(),
+    };
   }
 
   factory PostModel.fromMap(Map<String, dynamic> map) {
@@ -98,33 +100,36 @@ class PostModel {
       var name = element.name.toUpperCase();
       return name == map["status"];
     });
-
     return PostModel(
-      title: map['title'] ?? '',
-      id: map['id'] ?? '',
-      content: map['content'] ?? '',
-      category: map['category'] ?? '',
-      make: map['make'] ?? '',
-      model: map['model'] ?? '',
-      year: map['year']?.toInt() ?? 0,
-      views: map['views']?.toInt() ?? 0,
-      watching: map['watching']?.toInt() ?? 0,
-      commentss: map['commentss']?.toInt() ?? 0,
-      createdAt:
-          map['createdAt'] != null ? DateTime.tryParse(map['createdAt']) : null,
-      userInfoId: map['userInfoId'],
-      status: st,
-    );
+        title: map['title'] as String,
+        id: map['id'] as String,
+        content: map['content'] as String,
+        category: map['category'] as String,
+        make: map['make'] as String,
+        model: map['model'] as String,
+        year: map['year'] as int,
+        views: map['views'] as int,
+        watching: map['watching'] as int,
+        commentss: map['commentss'] as int,
+        createdAt: map['createdAt'] != null
+            ? DateTime.tryParse(map['createdAt'])
+            : null,
+        userInfoId:
+            map['userInfoId'] != null ? map['userInfoId'] as String : null,
+        userInfo: map['UserInfo'] != null
+            ? UserInfo.post(map['UserInfo'] as Map<String, dynamic>)
+            : null,
+        status: st);
   }
 
   String toJson() => json.encode(toMap());
 
   factory PostModel.fromJson(String source) =>
-      PostModel.fromMap(json.decode(source));
+      PostModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'PostModel(title: $title, id: $id, content: $content, category: $category, make: $make, model: $model, year: $year, views: $views, watching: $watching, commentss: $commentss, createdAt: $createdAt, userInfoId: $userInfoId, status: $status)';
+    return 'PostModel(title: $title, id: $id, content: $content, category: $category, make: $make, model: $model, year: $year, views: $views, watching: $watching, commentss: $commentss, createdAt: $createdAt, userInfoId: $userInfoId, userInfo: $userInfo, status: $status)';
   }
 
   @override
@@ -144,6 +149,7 @@ class PostModel {
         other.commentss == commentss &&
         other.createdAt == createdAt &&
         other.userInfoId == userInfoId &&
+        other.userInfo == userInfo &&
         other.status == status;
   }
 
@@ -161,6 +167,7 @@ class PostModel {
         commentss.hashCode ^
         createdAt.hashCode ^
         userInfoId.hashCode ^
+        userInfo.hashCode ^
         status.hashCode;
   }
 

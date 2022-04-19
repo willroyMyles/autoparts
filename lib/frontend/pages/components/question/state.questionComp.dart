@@ -6,6 +6,7 @@ import 'package:wrg3/backend/network/general.executor.dart';
 class QuestionCompState extends GetxController {
   Map<String, QuestionModel> displayList = {};
   late PostModel currentPostModel;
+  bool hideQuestions = false;
 
   getQuestions() async {
     try {
@@ -23,5 +24,10 @@ class QuestionCompState extends GetxController {
   setCurrentPostModel(PostModel model) {
     currentPostModel = model;
     getQuestions();
+  }
+
+  toggleHideQuesions() {
+    hideQuestions = !hideQuestions;
+    refresh();
   }
 }

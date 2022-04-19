@@ -79,6 +79,14 @@ class UserInfo {
       alias: "",
       postId: "",
       createdAt: DateTime.now());
+
+  factory UserInfo.post(Map<String, dynamic> map) {
+    var user = UserInfo.empty();
+    user.id = map["id"];
+    user.username = map["username"];
+    user.userImageUrl = map["userImageUrl"];
+    return user;
+  }
   @override
   String toString() {
     return 'UserInfo(userId: $userId, id: $id, username: $username, userImageUrl: $userImageUrl, email: $email, alias: $alias, postId: $postId, createdAt: $createdAt)';
